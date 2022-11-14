@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './styles.css';
-import { Card } from '../../components/Card'
+import { Card } from '../../components/Card';
 
 export function Home() {
     // O estado tem dois elementos: 1o) studentName -> guarda o conteúdo do estado. 2o) setStudentName -> Função que atualiza o estado.
