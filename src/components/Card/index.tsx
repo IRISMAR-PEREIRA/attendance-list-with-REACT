@@ -1,6 +1,12 @@
+import React from 'react'
 import './styles.css';
 
-export function Card(props){
+export type CardProps = {
+    name: string;
+    time: string;
+}
+
+export function Card(props:CardProps){
     return(
         <div className='card'>
             <strong>{props.name}</strong>

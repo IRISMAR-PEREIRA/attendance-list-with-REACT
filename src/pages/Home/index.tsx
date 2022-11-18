@@ -1,12 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import './styles.css';
-import { Card } from '../../components/Card';
+import { Card, CardProps } from '../../components/Card';
+
+type ProfileResponse = {
+    name: string;
+    avatar_url: string;
+}
+
+type User = {
+    name: string;
+    avatar: string;
+  }
 
 export function Home() {
     // O estado tem dois elementos: 1o) studentName -> guarda o conteúdo do estado. 2o) setStudentName -> Função que atualiza o estado.
     const [studentName, setStudentName] = useState('');
-    const [students, setStudents] = useState([]);
-    const [user, setUser] = useState({ name: '', avatar: ''});
+    const [students, setStudents] = useState<CardProps[]>([]);
+    const [user, setUser] = useState<User>({} as User);
 
     function handleAddStudent(){
         const newStudent = {
@@ -24,17 +34,20 @@ export function Home() {
 
     }
 
-    useEffect(()=> {
-        //corpo do useEffect -> São as ações que deverão ser executadas. É executado assim que a interface for renderizada. É automático.
-        fetch('https://api.github.com/users/irismar-pereira')
-        .then(response => response.json())
-        .then(data => {
-            setUser({
-                name: data.name,
-                avatar: data.avatar_url,
-            })
-        });        
-    },[]);
+    useEffect(() => {
+        // corpo do useEffect -> São as ações que deverão ser executadas. É executado assim que a interface for renderizada. É automático.
+        async function fetchData() {
+          const response = await fetch('https://api.github.com/users/irismar-pereira');
+          const data = await response.json() as ProfileResponse;
+    
+          setUser({
+            name: data.name,
+            avatar: data.avatar_url,
+          });
+        }
+    
+        fetchData();
+      }, []);
     
     return (
         <div className="container">
